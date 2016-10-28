@@ -14,7 +14,8 @@ import com.qualcomm.robotcore.util.Range;
 public class PushbotTeamFractal extends OpMode{
 
     /* Declare OpMode members. */
-    Hardware robot = new Hardware(); // use the class created to define a Pushbot's hardware
+    Hardware robot;
+    double[] controls;
 
 
     /*
@@ -25,7 +26,13 @@ public class PushbotTeamFractal extends OpMode{
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
+        robot = new Hardware(); // define the Pushbot's hardware.
         robot.init(hardwareMap);
+
+        /* 0 : Left joystick up / down value.
+         * 1 : Right joystick up / down value.
+         */
+        controls = new double[2]; // Holds all robot control data to be processed.
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
@@ -36,6 +43,7 @@ public class PushbotTeamFractal extends OpMode{
      */
     @Override
     public void init_loop() {
+        telemetry.addData("Say", "Please press play.");
     }
 
     /*
@@ -43,6 +51,7 @@ public class PushbotTeamFractal extends OpMode{
      */
     @Override
     public void start() {
+        telemetry.addData("Say", "Starting...");
     }
 
     /*
@@ -50,18 +59,16 @@ public class PushbotTeamFractal extends OpMode{
      */
     @Override
     public void loop() {
-        double left;
-        double right;
 
-        left = gamepad1.left_stick_y;
-        right = gamepad1.right_stick_y; // The robot drives "backwards," so don't negate the joystick values.
-        robot.leftMotor.setPower(left);
-        robot.rightMotor.setPower(right);
+        controls[0] = gamepad1.left_stick_y;
+        controls[1] = gamepad1.right_stick_y; // The robot drives "backwards," so don't negate the joystick values.
+        robot.leftMotor.setPower(controls[0]);
+        robot.rightMotor.setPower(controls[1]);
 
         // Send telemetry message to signify robot running;
         telemetry.addData("Say", "**** Joystick Data ****");
-        telemetry.addData("left",  "%.2f", left);
-        telemetry.addData("right", "%.2f", right);
+        telemetry.addData("left",  "%.2f", controls[0]);
+        telemetry.addData("right", "%.2f", controls[1]);
     }
 
     /*
