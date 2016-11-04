@@ -20,7 +20,7 @@ public class PushbotAutonomousTeamFractal extends OpMode{
 
     /* Declare OpMode members. */
     Hardware robot;
-
+    Map map;
 
     /*
      * Code to run ONCE when the driver hits INIT

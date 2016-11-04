@@ -61,7 +61,7 @@ public class PushbotTeamFractal extends OpMode{
     public void loop() {
 
         controls[0] = gamepad1.right_stick_y;
-        controls[1] = gamepad1.left_stick_y; // The robot drives "backwards," so don't negate the joystick values.
+        controls[1] = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
         robot.leftMotor.setPower(controls[0]); // left motor is actually the right motor.
         robot.rightMotor.setPower(controls[1]); // and vice versa.
 
