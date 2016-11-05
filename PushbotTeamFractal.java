@@ -11,11 +11,12 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Team Fractals Robot", group="Pushbot")
 //@Disabled
-public class PushbotTeamFractal extends OpMode{
+public class PushbotTeamFractal extends OpMode {
 
     /* Declare OpMode members. */
     Hardware robot;
-    double[] controls;
+
+    double x, y;
 
 
     /*
@@ -29,10 +30,8 @@ public class PushbotTeamFractal extends OpMode{
         robot = new Hardware(); // define the Pushbot's hardware.
         robot.init(hardwareMap);
 
-        /* 0 : Left joystick up / down value.
-         * 1 : Right joystick up / down value.
-         */
-        controls = new double[2]; // Holds all robot control data to be processed.
+        x = 0;
+        y = 0;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
@@ -60,15 +59,15 @@ public class PushbotTeamFractal extends OpMode{
     @Override
     public void loop() {
 
-        controls[0] = gamepad1.right_stick_y;
-        controls[1] = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
-        robot.leftMotor.setPower(controls[0]); // left motor is actually the right motor.
-        robot.rightMotor.setPower(controls[1]); // and vice versa.
+        double throttle = gamepad1.left_stick_y;
+        double steer = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
+        robot.leftMotor.setPower(throttle / 2 + steer); // left motor is actually the right motor.
+        robot.rightMotor.setPower(throttle / 2 - steer); // and vice versa.
 
         // Send telemetry message to signify robot running;
         telemetry.addData("Say", "**** Joystick Data ****");
-        telemetry.addData("left",  "%.2f", controls[0]);
-        telemetry.addData("right", "%.2f", controls[1]);
+        telemetry.addData("left",  "%.2f", x);
+        telemetry.addData("right", "%.2f", y);
     }
 
     /*
