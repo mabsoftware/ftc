@@ -25,6 +25,8 @@ public class TFAutonomous extends OpMode{
     private final double PI = 3.1415926535897932384626;
     private final double CONVERSION = PI / 180;
 
+    int v_state;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -35,6 +37,8 @@ public class TFAutonomous extends OpMode{
          */
         robot = new Hardware(); // define the Pushbot's hardware.
         robot.init(hardwareMap);
+
+        v_state = 0;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
@@ -61,7 +65,16 @@ public class TFAutonomous extends OpMode{
      */
     @Override
     public void loop() {
-
+        switch(v_state) {
+            case 0:
+                // First thing to do.
+                v_state++;
+                break;
+            case 1:
+                // Second thing to do.
+                v_state++;
+                break;
+        }
         // Code to run multiple times goes here.
     }
 
