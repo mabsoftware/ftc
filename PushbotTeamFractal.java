@@ -18,6 +18,8 @@ public class PushbotTeamFractal extends OpMode {
 
     double x, y;
 
+    boolean direction; // true is beacon forward, false is other forward.
+
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -32,6 +34,8 @@ public class PushbotTeamFractal extends OpMode {
 
         x = 0;
         y = 0;
+
+        direction = false;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
@@ -60,14 +64,22 @@ public class PushbotTeamFractal extends OpMode {
     public void loop() {
 
         double throttle = gamepad1.left_stick_y;
+        throttle = (direction) ? throttle * -1 : throttle;
         double steer = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
-        robot.leftMotor.setPower(throttle / 2 + steer); // left motor is actually the right motor.
-        robot.rightMotor.setPower(throttle / 2 - steer); // and vice versa.
+        robot.leftMotor.setPower(throttle / 3 + steer); // left motor is actually the right motor.
+        robot.rightMotor.setPower(throttle / 3 - steer); // and vice versa.
+
+        if (gamepad1.a) {
+            direction = true;
+        }
+        if (gamepad1.b) {
+            direction = false;
+        } // Allows you to switch forward / backwards on the robot.
 
         // Send telemetry message to signify robot running;
         telemetry.addData("Say", "**** Joystick Data ****");
-        telemetry.addData("left",  "%.2f", x);
-        telemetry.addData("right", "%.2f", y);
+        telemetry.addData("left",  "%.2f", throttle / 2 + steer);
+        telemetry.addData("right", "%.2f", throttle / 2 - steer);
     }
 
     /*
