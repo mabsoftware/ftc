@@ -1,5 +1,5 @@
 /* Team Fractals Autonomous Program */
-/* Last updated 11/03/16 */
+/* Last updated 11/06/16 */
 /* Uses same hardware init file as PushbotTeamFractal.java */
 
 package org.firstinspires.ftc.teamcode;
@@ -14,9 +14,9 @@ import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.Range;
 
 
-@Autonomous(name="Team Fractals Autonomous")
+@Autonomous(name="TF Autonomous")
 //@Disabled
-public class PushbotAutonomousTeamFractal extends OpMode{
+public class TFAutonomous extends OpMode{
 
     /* Declare OpMode members. */
     Hardware robot;
