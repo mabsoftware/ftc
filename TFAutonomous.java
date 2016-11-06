@@ -40,6 +40,9 @@ public class TFAutonomous extends OpMode{
 
         v_state = 0;
 
+        robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
     }

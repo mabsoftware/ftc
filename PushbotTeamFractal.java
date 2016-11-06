@@ -66,10 +66,12 @@ public class PushbotTeamFractal extends OpMode {
     public void loop() {
 
         double throttle = gamepad1.left_stick_y;
+        double sweeperSpeed = gamepad2.right_stick_y;
         throttle = (direction) ? throttle * -1 : throttle;
         double steer = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
         robot.leftMotor.setPower(throttle / 3 + steer); // left motor is actually the right motor.
         robot.rightMotor.setPower(throttle / 3 - steer); // and vice versa.
+        robot.sweeper.setPower(sweeperSpeed);
 
         if (gamepad1.a) {
             direction = true;
