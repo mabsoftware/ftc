@@ -22,6 +22,9 @@ public class TFAutonomous extends OpMode{
     Hardware robot;
     Map map;
 
+    private final double PI = 3.1415926535897932384626;
+    private final double CONVERSION = PI / 180;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
