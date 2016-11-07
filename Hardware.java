@@ -60,6 +60,9 @@ public class Hardware
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         // Define and initialize ALL installed servos.
     }
 
