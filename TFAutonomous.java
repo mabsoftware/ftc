@@ -114,7 +114,7 @@ public class TFAutonomous extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  5.75,  5.75, 5.0);
+        encoderDrive(DRIVE_SPEED,  5.75 * 12,  5.75 * 12, 5.0);
 
         telemetry.addData("Robot", "Complete");
         telemetry.update();
