@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Team Fractals Robot", group="Pushbot")
 //@Disabled
-public class PushbotTeamFractal extends OpMode {
+public class Drive extends OpMode {
 
     /* Declare OpMode members. */
     Hardware robot;
