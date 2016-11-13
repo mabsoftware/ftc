@@ -90,7 +90,7 @@ public class TFAutonomous extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, true);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -114,7 +114,7 @@ public class TFAutonomous extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  5.75 * 12,  5.75 * 12, 5.0);
+        encoderDrive(DRIVE_SPEED,  5.0 * 12,  5.0 * 12, 5.0);
 
         telemetry.addData("Robot", "Complete");
         telemetry.update();

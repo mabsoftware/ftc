@@ -28,6 +28,8 @@ public class Hardware
     public DcMotor  rightMotor  = null;
     public DcMotor  sweeper = null;
 
+    public boolean withEncoders = false;
+
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -38,9 +40,11 @@ public class Hardware
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
+    public void init(HardwareMap ahwMap, boolean isUsing) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+
+        this.withEncoders = isUsing;
 
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left_drive");
@@ -56,12 +60,14 @@ public class Hardware
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (withEncoders) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
 
         // Define and initialize ALL installed servos.
     }
