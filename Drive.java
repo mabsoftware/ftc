@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="Team Fractals Robot", group="Pushbot")
+@TeleOp(name="Drive", group="Manual")
 //@Disabled
 public class Drive extends OpMode {
 
@@ -22,7 +22,8 @@ public class Drive extends OpMode {
 
     private static final double MAX = 0.75;
 
-    boolean direction; // true is beacon forward, false is other forward.
+    boolean direction; // true is beacon hitter forward, false is other forward.
+    byte dirNum;
 
 
     /*
@@ -40,6 +41,7 @@ public class Drive extends OpMode {
         y = 0;
 
         direction = false;
+        dirNum = 1;
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Ready.");    //
@@ -78,9 +80,12 @@ public class Drive extends OpMode {
         double myRight = -gamepad1.right_stick_y;
         double mySweeper = gamepad2.right_stick_y;
 
-        robot.leftMotor.setPower(Range.clip(myLeft, -MAX, MAX));
-        robot.rightMotor.setPower(Range.clip(myRight, -MAX, MAX));
+        dirNum = (direction) ? dirNum *= -1 : dirNum;
+
+        robot.leftMotor.setPower(Range.clip(dirNum * myLeft, -MAX, MAX));
+        robot.rightMotor.setPower(Range.clip(dirNum * myRight, -MAX, MAX));
         robot.sweeper.setPower(Range.clip(mySweeper, -1, 1));
+
         if (gamepad1.a) {
             direction = true;
         }
@@ -99,7 +104,7 @@ public class Drive extends OpMode {
      */
     @Override
     public void stop() {
-        telemetry.addData("Say", "Stopped.");
+        telemetry.addData("Status", "Stopped.");
     }
 
 }
