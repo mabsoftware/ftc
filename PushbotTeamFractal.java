@@ -20,6 +20,8 @@ public class PushbotTeamFractal extends OpMode {
 
     double x, y;
 
+    private static final double MAX = 0.75;
+
     boolean direction; // true is beacon forward, false is other forward.
 
 
@@ -32,7 +34,7 @@ public class PushbotTeamFractal extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot = new Hardware(); // define the Pushbot's hardware.
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, false);
 
         x = 0;
         y = 0;
@@ -65,14 +67,20 @@ public class PushbotTeamFractal extends OpMode {
     @Override
     public void loop() {
 
-        double throttle = gamepad1.left_stick_y;
+        /*double throttle = gamepad1.left_stick_y;
         double sweeperSpeed = gamepad2.right_stick_y;
         throttle = (direction) ? throttle * -1 : throttle;
         double steer = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
-        robot.leftMotor.setPower(throttle / 3 + steer); // left motor is actually the right motor.
-        robot.rightMotor.setPower(throttle / 3 - steer); // and vice versa.
-        robot.sweeper.setPower(sweeperSpeed);
+        robot.leftMotor.setPower(Range.clip(throttle / 3 + steer, -1, 1)); // left motor is actually the right motor.
+        robot.rightMotor.setPower(Range.clip(throttle / 3 - steer, -1, 1)); // and vice versa.
+        robot.sweeper.setPower(sweeperSpeed);*/
+        double myLeft = -gamepad1.left_stick_y;
+        double myRight = -gamepad1.right_stick_y;
+        double mySweeper = gamepad2.right_stick_y;
 
+        robot.leftMotor.setPower(Range.clip(myLeft, -MAX, MAX));
+        robot.rightMotor.setPower(Range.clip(myRight, -MAX, MAX));
+        robot.sweeper.setPower(Range.clip(mySweeper, -1, 1));
         if (gamepad1.a) {
             direction = true;
         }
@@ -82,8 +90,8 @@ public class PushbotTeamFractal extends OpMode {
 
         // Send telemetry message to signify robot running;
         telemetry.addData("Say", "**** Joystick Data ****");
-        telemetry.addData("left",  "%.2f", throttle / 2 + steer);
-        telemetry.addData("right", "%.2f", throttle / 2 - steer);
+        telemetry.addData("left",  "%.2f", myLeft);
+        telemetry.addData("right", "%.2f", myRight);
     }
 
     /*
