@@ -1,5 +1,9 @@
-/* Just testing the branching capabilities. */
-/* Me too! */
+/* Main Driving Class
+ * Drive type: Tank
+ * Max operation speed: 75%.
+ * Forwards: depends, starts on beacon pusher.
+ */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

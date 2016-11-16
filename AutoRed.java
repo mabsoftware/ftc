@@ -1,6 +1,8 @@
 /* Team Fractals Autonomous Program if on Team Red
  * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
+ * Negative power to the motors moves the robot
+ * forward.
  */
 
 package org.firstinspires.ftc.teamcode;
@@ -19,7 +21,7 @@ public class AutoRed extends LinearOpMode {
 
     // Constants for figuring distance using motor encoders.
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159265358979323846264338);
     static final double     DRIVE_SPEED             = 0.6;
