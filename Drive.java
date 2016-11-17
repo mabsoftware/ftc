@@ -1,5 +1,9 @@
-/* Just testing the branching capabilities. */
-/* Me too! */
+/* Main Driving Class
+ * Drive type: Tank
+ * Max operation speed: 75%.
+ * Forwards: depends, starts on beacon pusher.
+ */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -94,9 +98,9 @@ public class Drive extends OpMode {
         } // Allows you to switch forward / backwards on the robot.
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("Say", "**** Joystick Data ****");
-        telemetry.addData("left",  "%.2f", myLeft);
-        telemetry.addData("right", "%.2f", myRight);
+        telemetry.addData("Data", "**** Joystick Data ****");
+        telemetry.addData("Left",  "%.2f", myLeft);
+        telemetry.addData("Right", "%.2f", myRight);
     }
 
     /*

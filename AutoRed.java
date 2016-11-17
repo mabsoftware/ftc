@@ -1,33 +1,50 @@
 /* Team Fractals Autonomous Program if on Team Red
  * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
+ * Negative power to the motors moves the robot
+ * forward.
  */
 
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.Hardware;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 @Autonomous(name="Blue Team Autonomous", group="Autonomous Team Fractals")
 public class AutoRed extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
 
+    // Declare sensor variables.
+    ColorSensor colorSensor;
+    double[] rgb;
+
     // Constants for figuring distance using motor encoders.
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159265358979323846264338);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
+    // Constants for turning the robot theta degrees.
+    static final double ROBOT_WIDTH = 14;
+    static final double PIVOT_OFFSET = 3; // Units in inches.
+
     @Override
     public void runOpMode() {
         robot.init(hardwareMap, true);
+
+        // Initialize sensors.
+
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor.enableLed(true);
+        rgb = new double[3];
+        telemetry.addData("Status", "Sensors online.");
+        telemetry.update();
 
         telemetry.addData("Status", "Resetting encoders...");
         telemetry.update();
@@ -42,11 +59,29 @@ public class AutoRed extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
+        // *** Main Code *** //
         encoderDrive(DRIVE_SPEED,  5.0 * 12,  5.0 * 12, 5.0);
 
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();
+    }
+
+    public void readColorSensor() {
+        rgb[0] = colorSensor.red();
+        rgb[1] = colorSensor.green();
+        rgb[2] = colorSensor.blue();
+    }
+
+    public void turnRobot(double THETA) {
+        // Write code to turn the robot THETA degrees.
+        if (THETA == 0) return;
+        else if (THETA < 0) {
+            // If THETA is negative, turn left.
+        }
+        else {
+            // Otherwise, turn right.
+        }
     }
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
