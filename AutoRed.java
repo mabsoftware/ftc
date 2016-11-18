@@ -41,7 +41,7 @@ public class AutoRed extends LinearOpMode {
         // Initialize sensors.
 
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        colorSensor.enableLed(true);
+        colorSensor.enableLed(false); // Set to passive mode to read beacons.
         rgb = new double[3];
         telemetry.addData("Status", "Sensors online.");
         telemetry.update();
