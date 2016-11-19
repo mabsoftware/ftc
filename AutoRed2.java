@@ -1,4 +1,4 @@
-/* Team Fractals Autonomous Program if on Team Red
+/* Team Fractals Autonomous Program if on Team Red, Station 2.
  * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
  * Negative power to the motors moves the robot
