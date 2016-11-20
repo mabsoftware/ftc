@@ -55,20 +55,15 @@ public class Drive extends OpMode {
      // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
     @Override
     public void loop() {
-
-        /*double throttle = gamepad1.left_stick_y;
-        double sweeperSpeed = gamepad2.right_stick_y;
-        throttle = (direction) ? throttle * -1 : throttle;
-        double steer = gamepad1.right_stick_x; // The robot drives "backwards," so don't negate the joystick values.
-        robot.leftMotor.setPower(Range.clip(throttle / 3 + steer, -1, 1)); // left motor is actually the right motor.
-        robot.rightMotor.setPower(Range.clip(throttle / 3 - steer, -1, 1)); // and vice versa.
-        robot.sweeper.setPower(sweeperSpeed);*/
+        // *** Get Values from user *** //
         double myLeft = -gamepad1.left_stick_y;
         double myRight = -gamepad1.right_stick_y;
         boolean preciseMode = !gamepad1.right_bumper;
 
+        // *** Helper code to determine front of robot *** //
         dirNum = (direction) ? dirNum *= -1 : dirNum;
 
+        // *** Precise Mode Code *** //
         if (preciseMode) {
             telemetry.addData("Robot", "Precise mode enabled.");
             myLeft = Range.clip(myLeft, -MAX / 4, MAX / 4);
@@ -80,9 +75,11 @@ public class Drive extends OpMode {
             myRight = Range.clip(myRight, -MAX, MAX);
         } // But if you need to get somewhere quickly, just hit the right bumper and go.
 
+        // *** Set Motor Powers *** //
         robot.leftMotor.setPower(myLeft);
         robot.rightMotor.setPower(myRight);
 
+        // *** Get User Input for Direction *** //
         if (gamepad1.a) {
             direction = true;
         }
