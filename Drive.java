@@ -80,12 +80,9 @@ public class Drive extends OpMode {
         robot.rightMotor.setPower(myRight);
 
         // *** Get User Input for Direction *** //
-        if (gamepad1.a) {
-            direction = true;
-        }
-        if (gamepad1.b) {
-            direction = false;
-        } // Allows you to switch forward / backwards on the robot.
+        if (gamepad1.right_stick_button) {
+            direction = !direction;
+        } // Toggle direction based on right stick button.
 
         // Send data via telemetry.
         telemetry.addData("Data", "**** Joystick Data ****");
