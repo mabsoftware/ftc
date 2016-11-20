@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-
-@TeleOp(name="Drive", group="Manual")
+@TeleOp(name="Main Drive", group="Manual")
 public class Drive extends OpMode {
 
     /* Declare OpMode members. */
@@ -23,11 +22,11 @@ public class Drive extends OpMode {
     byte dirNum;
     boolean preciseMode;
 
-     // Code to run ONCE when the driver hits INIT
+    // Code to run ONCE when the driver hits INIT
     @Override
     public void init() {
         /* Initialize the hardware variables.
-         * The init() method of the hardware class does all the work here.*/
+         * The init() method of the hardware class does all the work.*/
         robot = new Hardware(); // define the Pushbot's hardware.
         robot.init(hardwareMap, false);
 
@@ -36,23 +35,23 @@ public class Drive extends OpMode {
         dirNum = 1;
         preciseMode = true; // put precise mode on by default.
 
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Robot", "Ready.");    //
+        // Send telemetry message to signify robot waiting.
+        telemetry.addData("Robot", "Ready.");
     }
 
-     // Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
+    // Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
     @Override
     public void init_loop() {
         telemetry.addData("Robot", "Please press play.");
     }
 
-     // Code to run ONCE when the driver hits PLAY
+    // Code to run ONCE when the driver hits PLAY
     @Override
     public void start() {
         telemetry.addData("Robot", "Starting...");
     }
 
-     // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
+    // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP.
     @Override
     public void loop() {
         // *** Get Values from user *** //
@@ -90,7 +89,7 @@ public class Drive extends OpMode {
         telemetry.addData("Right", "%.2f", myRight);
     }
 
-     // Code to run ONCE after the driver hits STOP
+    // Code to run ONCE after the driver hits STOP
     @Override
     public void stop() {
         telemetry.addData("Robot", "Stopped.");
