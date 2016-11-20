@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-@Autonomous(name = "Blue Team", group = "Autonomous")
+@Autonomous(name = "Blue Team 2", group = "Autonomous")
 public class AutoBlue2 extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
