@@ -19,8 +19,8 @@ public class AutoRed1 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
 
     // Declare sensor variables.
-    ColorSensor colorSensor;
-    double[] rgb;
+    ColorSensor cSensor;
+    ColorSensing colorSensor;
 
     // Constants for figuring distance using motor encoders.
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
@@ -40,12 +40,13 @@ public class AutoRed1 extends LinearOpMode {
 
         // Initialize sensors.
 
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        colorSensor.enableLed(false); // Set to passive mode to read beacons.
-        rgb = new double[3];
+        cSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor = new ColorSensing(cSensor);
+        colorSensor.setMode('p');
         telemetry.addData("Status", "Sensors online.");
         telemetry.update();
 
+        //*** Encoder Stuff ***//
         telemetry.addData("Status", "Resetting encoders...");
         telemetry.update();
 
@@ -65,12 +66,6 @@ public class AutoRed1 extends LinearOpMode {
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();
-    }
-
-    public void readColorSensor() {
-        rgb[0] = colorSensor.red();
-        rgb[1] = colorSensor.green();
-        rgb[2] = colorSensor.blue();
     }
 
     public void turnRobot(double THETA) {
