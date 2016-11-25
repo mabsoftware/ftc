@@ -19,12 +19,12 @@ public class AutoBlue1 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
 
     // Declare sensor variables.
-    ColorSensor colorSensor;
-    double[] rgb = {0, 0, 0};
+    ColorSensor cSensor;
+    ColorSensing colorSensor;
 
     // Constants for figuring distance using motor encoders.
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159265358979323846264338);
     static final double     DRIVE_SPEED             = 0.6;
@@ -46,8 +46,9 @@ public class AutoBlue1 extends LinearOpMode {
         telemetry.update();
 
         // *** Initialize all sensors *** //
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        colorSensor.enableLed(true);
+        cSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor = new ColorSensing(cSensor);
+        colorSensor.setMode('p');
         telemetry.addData("Status", "Color Sensor Enabled.");
         telemetry.update();
 

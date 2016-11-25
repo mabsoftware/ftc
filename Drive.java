@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 
 @TeleOp(name="Main Drive", group="Manual")
 public class Drive extends OpMode {
@@ -98,7 +99,7 @@ public class Drive extends OpMode {
         robot.rightMotor.setPower(myRight);
 
         // *** Get User Input for Direction *** //
-        if (gamepad1.right_stick_button) {
+        if (gamepad1.left_bumper) {
             direction = !direction;
         } // Toggle direction based on right stick button.
 
