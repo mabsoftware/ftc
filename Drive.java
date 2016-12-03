@@ -24,6 +24,7 @@ public class Drive extends OpMode {
     byte dirNum;
     boolean preciseMode;
     byte mode;
+    double shoot;
 
     // Code to run ONCE when the driver hits INIT
     @Override
@@ -37,6 +38,7 @@ public class Drive extends OpMode {
         dirNum = 1;
         preciseMode = true; // put precise mode on by default.
         mode = 1; // 1 is precise, 2 is fast, 3 is turbo.
+        shoot = 0.00; // don't shoot.
 
         // Send telemetry message to signify robot waiting.
         telemetry.addData("Robot", "Ready.");
@@ -58,9 +60,10 @@ public class Drive extends OpMode {
     @Override
     public void loop() {
         // *** Get Values from user *** //
-        double myLeft = -gamepad1.left_stick_y;
-        double myRight = -gamepad1.right_stick_y;
+        double myLeft = gamepad1.left_stick_y;
+        double myRight = gamepad1.right_stick_y;
         boolean myRightBumper = gamepad1.right_bumper;
+        shoot = gamepad2.right_trigger;
 
         // *** Helper code to determine front of robot *** //
         dirNum = (direction) ? dirNum *= -1 : dirNum;
@@ -95,11 +98,12 @@ public class Drive extends OpMode {
         }
 
         // *** Set Motor Powers *** //
-        robot.leftMotor.setPower(myLeft);
-        robot.rightMotor.setPower(myRight);
+        robot.leftMotor.setPower(myRight);
+        robot.rightMotor.setPower(myLeft);
+        robot.catapult.setPower(Range.clip(shoot, -1, 1));
 
         // *** Get User Input for Direction *** //
-        if (gamepad1.left_bumper) {
+        if (gamepad1.a) {
             direction = !direction;
         } // Toggle direction based on right stick button.
 

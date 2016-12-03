@@ -56,7 +56,7 @@ public class AutoBlue2 extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-        encoderDrive(DRIVE_SPEED,  5.0 * 12,  5.0 * 12, 5.0);
+        encoderDrive(DRIVE_SPEED,  5.15 * 12,  5.15 * 12, 5.0);
 
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");

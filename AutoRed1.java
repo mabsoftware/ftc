@@ -61,7 +61,9 @@ public class AutoRed1 extends LinearOpMode {
 
         // *** Boiler Plate Code Done *** //
         // *** Main Code *** //
-        encoderDrive(DRIVE_SPEED,  5.0 * 12,  5.0 * 12, 5.0);
+
+        sleep(10000);
+        encoderDrive(DRIVE_SPEED,  6.0 * 12,  6.0 * 12, 5.0);
 
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Done...");
