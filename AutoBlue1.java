@@ -56,11 +56,21 @@ public class AutoBlue1 extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-        encoderDrive(DRIVE_SPEED,  5.0 * 12,  5.0 * 12, 5.0);
+        encoderDrive(DRIVE_SPEED,  6.0 * 12,  6.0 * 12, 5.0);
 
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
         telemetry.update();
+    }
+
+    public void turn(double theta) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if (theta < 0) {
+
+        } else {
+
+        }
     }
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
