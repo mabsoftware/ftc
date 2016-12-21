@@ -17,14 +17,12 @@ public class Drive extends OpMode {
     /* Declare OpMode members. */
     Hardware robot;
 
+    boolean forwardBeacon; // true if beacon side, false if not.
+    boolean inPreciseMode; // true if precise mode, false if not.
+
+    private static final double PRECISE = 0.25;
     private static final double MAX = 0.75; // Maximum speed is 75% of total capacity.
     private static final double PHYSICAL_MAX = 1.00; // Physical maximum speed.
-
-    boolean direction; // true is beacon hitter forward, false is other side forward.
-    byte dirNum;
-    boolean preciseMode;
-    byte mode;
-    double shoot;
 
     // Code to run ONCE when the driver hits INIT
     @Override
@@ -33,13 +31,7 @@ public class Drive extends OpMode {
         robot = new Hardware(); // define the Pushbot's hardware.
         robot.init(hardwareMap, false); // Initialize hardware, no encoders.
 
-        // Controls various speed and direction modes.
-        direction = false;
-        dirNum = 1;
-        preciseMode = true; // put precise mode on by default.
-        mode = 1; // 1 is precise, 2 is fast, 3 is turbo.
-        shoot = 0.00; // don't shoot.
-
+        forwardBeacon = true; // start w/ beacon pointing forward.
         // Send telemetry message to signify robot waiting.
         telemetry.addData("Robot", "Ready.");
     }
@@ -62,51 +54,31 @@ public class Drive extends OpMode {
         // *** Get Values from user *** //
         double myLeft = gamepad1.left_stick_y;
         double myRight = gamepad1.right_stick_y;
-        boolean myRightBumper = gamepad1.right_bumper;
-        shoot = gamepad2.right_trigger;
-
-        // *** Helper code to determine front of robot *** //
-        dirNum = (direction) ? dirNum *= -1 : dirNum;
-
-        // *** Precise Mode Code *** //
-        if (myRightBumper) {
-            telemetry.addData("Robot", "Mode changed.");
-            mode ++;
-            mode %= 3;
-        } // Normally, only go a quarter of the speed.
-
-        switch (mode) {
-            // Precise Mode
-            case 1:
-                myLeft = Range.clip(myLeft, -MAX / 4, MAX / 4);
-                myRight = Range.clip(myRight, -MAX / 4, MAX / 4);
-                break;
-            // Fast Mode
-            case 2:
-                myLeft = Range.clip(myLeft, -MAX, MAX);
-                myRight = Range.clip(myRight, -MAX, MAX);
-                break;
-            // Turbo Mode
-            case 3:
-                myLeft = Range.clip(myLeft, -PHYSICAL_MAX, PHYSICAL_MAX);
-                myRight = Range.clip(myRight, -PHYSICAL_MAX, PHYSICAL_MAX);
-                break;
-            // Catch any potential errors.
-            default:
-                telemetry.addData("Emergency", "Mode error!");
-                telemetry.update();
+        boolean leftBumper = gamepad1.left_bumper;
+        boolean rightBumper = gamepad1.right_bumper;
+        boolean yButton = gamepad1.y;
+        boolean aButton = gamepad1.a;
+        // *** Handle values from user *** //
+        if (leftBumper) inPreciseMode = true; // If left bumper is hit, set to precise mode.
+        if (rightBumper) inPreciseMode = false; // If right bumper is hit, set to speed mode.
+        if (yButton) forwardBeacon = true;
+        if (aButton) forwardBeacon = false;
+        // *** Compute motor speeds *** //
+        if (!forwardBeacon) {
+            myLeft = -myLeft;
+            myRight = -myRight;
+        } // handle direction flipping
+        if (inPreciseMode) {
+            Range.clip(myLeft, -PRECISE, PRECISE);
+            Range.clip(myRight, -PRECISE, PRECISE);
         }
-
-        // *** Set Motor Powers *** //
-        robot.leftMotor.setPower(myRight);
-        robot.rightMotor.setPower(myLeft);
-        robot.catapult.setPower(Range.clip(shoot, -1, 1));
-
-        // *** Get User Input for Direction *** //
-        if (gamepad1.a) {
-            direction = !direction;
-        } // Toggle direction based on right stick button.
-
+        else {
+            Range.clip(myLeft, -MAX, MAX);
+            Range.clip(myRight, -MAX, MAX);
+        } // handle precise and speed modes.
+        // *** Set motor speeds ***//
+        robot.leftMotor.setPower(myLeft);
+        robot.rightMotor.setPower(myRight);
         // Send data via telemetry.
         telemetry.addData("Data", "**** Joystick Data ****");
         telemetry.addData("Left",  "%.2f", myLeft);

@@ -63,9 +63,11 @@ public class AutoBlue1 extends LinearOpMode {
         telemetry.update();
     }
 
+    // Preconditions: theta is in the interval [-359, 359]
     public void turn(double theta) {
         robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // turn left if negative, right otherwise.
         if (theta < 0) {
 
         } else {
