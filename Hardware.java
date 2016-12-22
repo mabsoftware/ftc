@@ -16,6 +16,7 @@ public class Hardware
     public DcMotor  rightMotor   = null;
     public DcMotor  leftShooter  = null;
     public DcMotor  rightShooter = null;
+    //public DcMotor  sweeper      = null;
 
     public boolean withEncoders = false;
 
@@ -24,7 +25,7 @@ public class Hardware
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public Hardware(){
+    public Hardware() {
 
     }
 
@@ -40,6 +41,7 @@ public class Hardware
         rightMotor  = hwMap.dcMotor.get("right_motor");
         leftShooter = hwMap.dcMotor.get("left_shooter");
         rightShooter = hwMap.dcMotor.get("right_shooter");
+        //sweeper = hwMap.dcMotor.get("sweeper");
 
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if we transfer to AndyMark motors
         rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if we transfer to AndyMark motors
@@ -49,6 +51,7 @@ public class Hardware
         rightMotor.setPower(0);
         leftShooter.setPower(0);
         rightShooter.setPower(0);
+        //sweeper.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
