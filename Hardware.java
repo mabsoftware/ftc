@@ -7,15 +7,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Hardware
 {
     /* Public OpMode members. */
-    public DcMotor  leftMotor   = null;
-    public DcMotor  rightMotor  = null;
-    public DcMotor  catapult     = null;
+    public DcMotor  leftMotor    = null;
+    public DcMotor  rightMotor   = null;
+    public DcMotor  leftShooter  = null;
+    public DcMotor  rightShooter = null;
 
     public boolean withEncoders = false;
 
@@ -38,29 +38,29 @@ public class Hardware
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left_motor");
         rightMotor  = hwMap.dcMotor.get("right_motor");
-        catapult = hwMap.dcMotor.get("catapult");
-        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        leftShooter = hwMap.dcMotor.get("left_shooter");
+        rightShooter = hwMap.dcMotor.get("right_shooter");
+
+        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if we transfer to AndyMark motors
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if we transfer to AndyMark motors
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-        catapult.setPower(0);
+        leftShooter.setPower(0);
+        rightShooter.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
 
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        catapult.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         if (withEncoders) {
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-
-        // Define and initialize ALL installed servos.
     }
 
     /***
