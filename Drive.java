@@ -1,6 +1,6 @@
 /* Main Driving Class
  * Drive type: Tank
- * Max operation speed: 75%.
+ * Max operation speed: 50%.
  * Forwards: depends, starts on beacon pusher.
  */
 
@@ -9,7 +9,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 
 @TeleOp(name="Main Drive", group="Manual")
 public class Drive extends OpMode {
@@ -21,17 +20,18 @@ public class Drive extends OpMode {
     boolean inPreciseMode; // true if precise mode, false if not.
 
     private static final double PRECISE = 0.25;
-    private static final double MAX = 0.75; // Maximum speed is 75% of total capacity.
-    private static final double PHYSICAL_MAX = 1.00; // Physical maximum speed.
+    private static final double MAX = 0.50; // Maximum speed is 50% of total capacity.
 
     // Code to run ONCE when the driver hits INIT
     @Override
     public void init() {
         // *** Initialize the hardware variables. *** //
-        robot = new Hardware(); // define the Pushbot's hardware.
+        robot = new Hardware(); // define the robot's hardware.
         robot.init(hardwareMap, false); // Initialize hardware, no encoders.
 
         forwardBeacon = true; // start w/ beacon pointing forward.
+        inPreciseMode = true;
+
         // Send telemetry message to signify robot waiting.
         telemetry.addData("Robot", "Ready.");
     }
@@ -51,14 +51,16 @@ public class Drive extends OpMode {
     // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP.
     @Override
     public void loop() {
-        // *** Get Values from user *** //
-        double myLeft = gamepad1.left_stick_y;
-        double myRight = gamepad1.right_stick_y;
+        // *** Get Values from users *** //
+        double myLeft = -gamepad1.left_stick_y;
+        double myRight = -gamepad1.right_stick_y;
         boolean leftBumper = gamepad1.left_bumper;
         boolean rightBumper = gamepad1.right_bumper;
         boolean yButton = gamepad1.y;
         boolean aButton = gamepad1.a;
-        // *** Handle values from user *** //
+        double shooterSpeed = gamepad2.left_stick_y;
+        double sweeperSpeed = gamepad2.right_stick_y;
+        // *** Handle values from users *** //
         if (leftBumper) inPreciseMode = true; // If left bumper is hit, set to precise mode.
         if (rightBumper) inPreciseMode = false; // If right bumper is hit, set to speed mode.
         if (yButton) forwardBeacon = true;
@@ -67,18 +69,25 @@ public class Drive extends OpMode {
         if (!forwardBeacon) {
             myLeft = -myLeft;
             myRight = -myRight;
-        } // handle direction flipping
+            double temp = myLeft;
+            myLeft = myRight;
+            myRight = temp;
+        } // handle direction flipping, flip left and right motors.
         if (inPreciseMode) {
-            Range.clip(myLeft, -PRECISE, PRECISE);
-            Range.clip(myRight, -PRECISE, PRECISE);
+            myLeft = Range.clip(myLeft, -PRECISE, PRECISE);
+            myRight = Range.clip(myRight, -PRECISE, PRECISE);
+            telemetry.addData("Mode: ", "Precise");
         }
         else {
-            Range.clip(myLeft, -MAX, MAX);
-            Range.clip(myRight, -MAX, MAX);
+            myLeft = Range.clip(myLeft, -MAX, MAX);
+            myRight = Range.clip(myRight, -MAX, MAX);
+            telemetry.addData("Mode: ", "Speed");
         } // handle precise and speed modes.
         // *** Set motor speeds ***//
         robot.leftMotor.setPower(myLeft);
         robot.rightMotor.setPower(myRight);
+        robot.leftShooter.setPower(shooterSpeed);
+        robot.rightShooter.setPower(shooterSpeed);
         // Send data via telemetry.
         telemetry.addData("Data", "**** Joystick Data ****");
         telemetry.addData("Left",  "%.2f", myLeft);
