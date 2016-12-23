@@ -1,8 +1,8 @@
-/* Team Fractals Autonomous Program if on Team Blue, Station 1.
+/* Team Fractals Autonomous Program if on Team Red, Station 1.
  * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
- * Negative power to the motors drives the robot forward, beacon pusher first.
- * So for autonomous, with ball shooting, make sure to remember this.
+ * Negative power to the motors moves the robot
+ * forward.
  */
 
 package org.firstinspires.ftc.teamcode;
@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-@Autonomous(name = "Blue Team 1", group = "Autonomous")
-public class AutoBlue1 extends LinearOpMode {
+@Autonomous(name="Red Team 1", group="Autonomous")
+public class RedBeaconStrategy extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
 
@@ -24,15 +24,29 @@ public class AutoBlue1 extends LinearOpMode {
 
     // Constants for figuring distance using motor encoders.
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 5.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159265358979323846264338);
     static final double     DRIVE_SPEED             = 0.6;
+    static final double     TURN_SPEED              = 0.5;
+
+    // Constants for turning the robot theta degrees.
+    static final double ROBOT_WIDTH = 14;
+    static final double PIVOT_OFFSET = 3; // Units in inches.
 
     @Override
     public void runOpMode() {
         robot.init(hardwareMap, true);
 
+        // Initialize sensors.
+
+        cSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor = new ColorSensing(cSensor);
+        colorSensor.setMode('p');
+        telemetry.addData("Status", "Sensors online.");
+        telemetry.update();
+
+        //*** Encoder Stuff ***//
         telemetry.addData("Status", "Resetting encoders...");
         telemetry.update();
 
@@ -42,36 +56,28 @@ public class AutoBlue1 extends LinearOpMode {
 
         robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        telemetry.addData("Status", "Done.");
-        telemetry.update();
-
-        // *** Initialize all sensors *** //
-        cSensor = hardwareMap.colorSensor.get("sensor_color");
-        colorSensor = new ColorSensing(cSensor);
-        colorSensor.setMode('p');
-        telemetry.addData("Status", "Color Sensor Enabled.");
-        telemetry.update();
-
 
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
+        // *** Main Code *** //
+
+        sleep(10000);
         encoderDrive(DRIVE_SPEED,  6.0 * 12,  6.0 * 12, 5.0);
 
         // *** Main Code Done *** //
-        telemetry.addData("Robot", "Stopped.");
+        telemetry.addData("Robot", "Done...");
         telemetry.update();
     }
 
-    // Preconditions: theta is in the interval [-359, 359]
-    public void turn(double theta) {
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // turn left if negative, right otherwise.
-        if (theta < 0) {
-
-        } else {
-
+    public void turnRobot(double THETA) {
+        // Write code to turn the robot THETA degrees.
+        if (THETA == 0) return;
+        else if (THETA < 0) {
+            // If THETA is negative, turn left.
+        }
+        else {
+            // Otherwise, turn right.
         }
     }
 
