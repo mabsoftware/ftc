@@ -31,8 +31,8 @@ public class RedBeaconStrategy extends LinearOpMode {
     static final double     TURN_SPEED              = 0.5;
 
     // Constants for turning the robot theta degrees.
-    static final double ROBOT_WIDTH = 14;
-    static final double PIVOT_OFFSET = 3; // Units in inches.
+    static final double ROBOT_WIDTH = 16;
+    static final double WALL_OFFSET = 39;
 
     @Override
     public void runOpMode() {
@@ -61,23 +61,24 @@ public class RedBeaconStrategy extends LinearOpMode {
 
         // *** Boiler Plate Code Done *** //
         // *** Main Code *** //
-
-        sleep(10000);
         encoderDrive(DRIVE_SPEED,  6.0 * 12,  6.0 * 12, 5.0);
-
+        turn(90);
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();
     }
 
-    public void turnRobot(double THETA) {
-        // Write code to turn the robot THETA degrees.
-        if (THETA == 0) return;
-        else if (THETA < 0) {
-            // If THETA is negative, turn left.
-        }
-        else {
-            // Otherwise, turn right.
+    // Preconditions: theta is in the interval [-359, 359]
+    public void turn(double theta) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // turn left if negative, right otherwise.
+        if (theta < 0) {
+            double distanceToMove = ROBOT_WIDTH * (-theta / 360) * Math.PI;
+            encoderDrive(DRIVE_SPEED, 0, distanceToMove, 5.0);
+        } else {
+            double distanceToMove = ROBOT_WIDTH * (theta / 360) * Math.PI;
+            encoderDrive(DRIVE_SPEED, distanceToMove, 0, 5.0);
         }
     }
 
