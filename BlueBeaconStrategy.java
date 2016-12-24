@@ -1,4 +1,4 @@
-/* Team Fractals Autonomous Program if on Team Blue, Station 1.
+/* Beacon Strategy on Blue Side
  * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
  * Negative power to the motors drives the robot forward, beacon pusher first.
@@ -12,8 +12,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
-@Autonomous(name = "Blue Team 1", group = "Autonomous")
+@Autonomous(name = "Blue Team Beacon Strategy", group = "Autonomous")
 public class BlueBeaconStrategy extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
@@ -21,13 +22,7 @@ public class BlueBeaconStrategy extends LinearOpMode {
     // Declare sensor variables.
     ColorSensor cSensor;
     ColorSensing colorSensor;
-
-    // Constants for figuring distance using motor encoders.
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 5.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159265358979323846264338);
-    static final double     DRIVE_SPEED             = 0.6;
+    TouchSensor touchSensor;
 
     @Override
     public void runOpMode() {
@@ -36,8 +31,7 @@ public class BlueBeaconStrategy extends LinearOpMode {
         telemetry.addData("Status", "Resetting encoders...");
         telemetry.update();
 
-        robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        resetEncoders();
         idle();
 
         robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -48,19 +42,59 @@ public class BlueBeaconStrategy extends LinearOpMode {
         // *** Initialize all sensors *** //
         cSensor = hardwareMap.colorSensor.get("sensor_color");
         colorSensor = new ColorSensing(cSensor);
-        colorSensor.setMode('p');
+        colorSensor.setMode('p'); // set sensor to passive mode.
+        touchSensor = hardwareMap.touchSensor.get("sensor_touch");
         telemetry.addData("Status", "Color Sensor Enabled.");
+        telemetry.addData("Status", "Touch Sensor Enabled.");
         telemetry.update();
 
 
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-        encoderDrive(DRIVE_SPEED,  6.0 * 12,  6.0 * 12, 5.0);
 
+        forward(52);
+        sleep(250);
+        turn(90);
+        sleep(250);
+        pressBeacon();
+        if (colorSensor.getColor() == 'b') {
+            // Uncomment this to test the color sensor.
+            //telemetry.addData("::", "Got Blue.");
+            //sleep(10000);
+            forward(2);
+            sleep(250);
+        } else {
+            backward(2);
+            sleep(5000); // Wait for 5 seconds.
+            forward(2);
+        }
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
         telemetry.update();
+    }
+
+    public void resetEncoders() {
+        robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    // Precondition: Robot is already lined up.
+    public void pressBeacon() {
+        while (!touchSensor.isPressed()) {
+            robot.leftMotor.setPower(Constants.DRIVE_SPEED);
+            robot.rightMotor.setPower(Constants.DRIVE_SPEED);
+        }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+    }
+
+    public void forward(double inches) {
+        encoderDrive(Constants.DRIVE_SPEED, inches, inches);
+    }
+
+    public void backward(double inches) {
+        encoderDrive(Constants.DRIVE_SPEED, -inches, -inches);
     }
 
     // Preconditions: theta is in the interval [-359, 359]
@@ -69,13 +103,16 @@ public class BlueBeaconStrategy extends LinearOpMode {
         robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // turn left if negative, right otherwise.
         if (theta < 0) {
-
+            double distanceToMove = Constants.ROBOT_WIDTH * (-theta / 360) * Math.PI;
+            encoderDrive(Constants.DRIVE_SPEED, 0, distanceToMove * 2);
         } else {
-
+            telemetry.addData("Message", "Turning right...");
+            double distanceToMove = Constants.ROBOT_WIDTH * (theta / 360) * Math.PI;
+            encoderDrive(Constants.DRIVE_SPEED, distanceToMove * 2, 0);
         }
     }
 
-    public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
+    public void encoderDrive(double speed, double leftInches, double rightInches) {
         int newLeftTarget;
         int newRightTarget;
 
@@ -83,8 +120,8 @@ public class BlueBeaconStrategy extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * Constants.COUNTS_PER_INCH);
+            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(rightInches * Constants.COUNTS_PER_INCH);
             robot.leftMotor.setTargetPosition(newLeftTarget);
             robot.rightMotor.setTargetPosition(newRightTarget);
 
@@ -98,7 +135,7 @@ public class BlueBeaconStrategy extends LinearOpMode {
             robot.rightMotor.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() && (runtime.seconds() < timeoutS) && (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
+            while (opModeIsActive() && ((robot.leftMotor.isBusy() || robot.rightMotor.isBusy()))) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);

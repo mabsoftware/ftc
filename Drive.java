@@ -20,7 +20,7 @@ public class Drive extends OpMode {
     boolean inPreciseMode; // true if precise mode, false if not.
 
     private static final double PRECISE = 0.25;
-    private static final double MAX = 0.50; // Maximum speed is 50% of total capacity.
+    private static final double MAX = 1.50 / 3; // Maximum speed is 50% of total capacity.
 
     // Code to run ONCE when the driver hits INIT
     @Override
