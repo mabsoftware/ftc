@@ -9,6 +9,6 @@ public class Constants
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
     static final double     DRIVE_SPEED             = 0.3;
 
-    static final double WALL_OFFSET = 39;
+    static final double DISTANCE_BETWEEN_BEACONS = 15;
     static final double ROBOT_WIDTH = 16;
 }
