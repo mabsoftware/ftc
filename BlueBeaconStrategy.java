@@ -55,20 +55,17 @@ public class BlueBeaconStrategy extends LinearOpMode {
 
         forward(52);
         sleep(250);
-        turn(90);
+        turn(90); // turn right 90 degrees
         sleep(250);
         pressBeacon();
-        if (colorSensor.getColor() == 'b') {
-            // Uncomment this to test the color sensor.
-            //telemetry.addData("::", "Got Blue.");
-            //sleep(10000);
-            forward(2);
-            sleep(250);
-        } else {
-            backward(2);
-            sleep(5000); // Wait for 5 seconds.
-            forward(2);
-        }
+        backward(8);
+        turn(-90); // turn left 90 degrees
+        sleep(250);
+        forward(Constants.DISTANCE_BETWEEN_BEACONS);
+        turn(90);
+        pressBeacon();
+        backward(8);
+        turn(-90);
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
         telemetry.update();
@@ -87,6 +84,17 @@ public class BlueBeaconStrategy extends LinearOpMode {
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
+        if (colorSensor.getColor() == 'b') {
+            // Uncomment this to test the color sensor.
+            //telemetry.addData("::", "Got Blue.");
+            //sleep(10000);
+            forward(2);
+            sleep(250);
+        } else {
+            backward(2);
+            sleep(5000); // Wait for 5 seconds.
+            forward(2);
+        }
     }
 
     public void forward(double inches) {
