@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class RedBeaconStrategy extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
+    private AutoDrive drive = new AutoDrive(this, robot);
 
     // Declare sensor variables.
     ColorSensor cSensor;
