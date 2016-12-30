@@ -1,3 +1,9 @@
+/* Helper class: AutoDrive
+ * Bundles all encoder-based driving
+ * functionality required for autonomous
+ * period. Makes it easier to create
+ * multiple autonomous strategies.
+ */
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -6,11 +12,34 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class AutoDrive {
     LinearOpMode l;
     Hardware robot;
+    SensorArray s;
 
-    public AutoDrive(LinearOpMode l, Hardware robot) {
+    public AutoDrive(LinearOpMode l, Hardware robot, SensorArray s) {
         this.l = l;
         this.robot = robot;
+        this.s = s;
         resetEncoders();
+    }
+
+    // Precondition: Robot is already lined up.
+    public void pressBeacon() {
+        while (!s.isTouchingBeacon()) {
+            robot.leftMotor.setPower(Constants.DRIVE_SPEED);
+            robot.rightMotor.setPower(Constants.DRIVE_SPEED);
+        }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        if (s.getBeaconColor() == 'b') {
+            // Uncomment this to test the color sensor.
+            //telemetry.addData("::", "Got Blue.");
+            //sleep(10000);
+            forward(2);
+            l.sleep(250);
+        } else {
+            backward(2);
+            l.sleep(5000); // Wait for 5 seconds.
+            forward(2);
+        }
     }
 
     public void resetEncoders() {
