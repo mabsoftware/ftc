@@ -1,5 +1,4 @@
 /* Beacon Strategy on Blue Side
- * Based on program by Robert Atkinson (2016)
  * Note: front is beacon pusher.
  * Negative power to the motors drives the robot forward, beacon pusher first.
  * So for autonomous, with ball shooting, make sure to remember this.

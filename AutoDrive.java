@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class AutoDrive {
     LinearOpMode l;
@@ -14,6 +10,36 @@ public class AutoDrive {
     public AutoDrive(LinearOpMode l, Hardware robot) {
         this.l = l;
         this.robot = robot;
+        resetEncoders();
+    }
+
+    public void resetEncoders() {
+        robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void forward(double inches) {
+        encoderDrive(Constants.DRIVE_SPEED, inches, inches);
+    }
+
+    public void backward(double inches) {
+        encoderDrive(Constants.DRIVE_SPEED, -inches, -inches);
+    }
+
+    // Preconditions: theta is in the interval [-359, 359]
+    // To do: find out how to optimize this... too many lines of code
+    // for a simple job.
+    public void turn(double theta) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // turn left if negative, right otherwise.
+        if (theta < 0) {
+            double distanceToMove = Constants.ROBOT_WIDTH * (-theta / 360) * Math.PI;
+            encoderDrive(Constants.DRIVE_SPEED, 0, distanceToMove * 2);
+        } else {
+            double distanceToMove = Constants.ROBOT_WIDTH * (theta / 360) * Math.PI;
+            encoderDrive(Constants.DRIVE_SPEED, distanceToMove * 2, 0);
+        }
     }
 
     public void encoderDrive(double speed, double leftInches, double rightInches) {
@@ -38,8 +64,7 @@ public class AutoDrive {
             robot.rightMotor.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            while (l.opModeIsActive() && ((robot.leftMotor.isBusy() || robot.rightMotor.isBusy())))
-                ;
+            while (l.opModeIsActive() && ((robot.leftMotor.isBusy() || robot.rightMotor.isBusy())));
 
             // Stop all motion;
             robot.leftMotor.setPower(0);

@@ -11,4 +11,8 @@ public class Constants
 
     static final double DISTANCE_BETWEEN_BEACONS = 15;
     static final double ROBOT_WIDTH = 16;
+
+    // Strings for configuring sensors.
+    static final String beacon_color_sensor = "sensor_color";
+    static final String beacon_touch_sensor = "sensor_touch";
 }
