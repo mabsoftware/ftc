@@ -21,26 +21,21 @@ public class RedBeaconStrategy extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot.init(hardwareMap, true); // Initialize hardware with encoders.
-        drive = new AutoDrive(this, robot);
         sensors = new SensorArray(this);
+        drive = new AutoDrive(this, robot, sensors);
         telemetry.addData("Message", "All systems online.");
 
         waitForStart(); // Wait until ready.
 
         // *** Main Code *** //
-        sleep(3000);
-        telemetry.addData("Color sensor test...", sensors.getBeaconColor()); // prints b for blue, r for red.
-        telemetry.update();
-        sleep(3000);
-        telemetry.addData("Drive test...", ":");
-        telemetry.update();
-        drive.forward(20);
-        drive.turn(90);
-        sleep(3000);
-        telemetry.addData("Touch sensor test...", sensors.isTouchingBeacon()); // prints true if being touched.
-        telemetry.update();
+        while (true) {
+            telemetry.addData("Touch sensor test...", sensors.isTouchingBeacon()); // prints true if being touched.
+            telemetry.update();
+            sleep(100);
+        }
+        //sleep(3000);
         // *** Main Code Done *** //
-        telemetry.addData("Robot", "Done...");
-        telemetry.update();
+        //telemetry.addData("Robot", "Done...");
+        //telemetry.update();
     }
 }
