@@ -1,6 +1,7 @@
 /* Sensor Array Class
  * This class is meant to simplify getting sensor
- * inputs. It makes it easy to initialize and
+ * inputs. It makes it easy to initialize and use
+ * sensors.
  */
 package org.firstinspires.ftc.teamcode;
 
