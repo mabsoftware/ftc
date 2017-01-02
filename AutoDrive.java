@@ -22,8 +22,9 @@ public class AutoDrive {
     }
 
     // Precondition: Robot is already lined up.
+    /*
     public void pressBeacon() {
-        while (!s.isTouchingBeacon()) {
+        while (!s.donePressing()) {
             robot.leftMotor.setPower(Constants.DRIVE_SPEED);
             robot.rightMotor.setPower(Constants.DRIVE_SPEED);
         }
@@ -40,6 +41,14 @@ public class AutoDrive {
             l.sleep(5000); // Wait for 5 seconds.
             forward(2);
         }
+    }
+    */
+    public void pressBeacon() {
+        this.forward(25);
+    }
+
+    public void tap() {
+        this.forward(3);
     }
 
     public void resetEncoders() {

@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.robocol.PeerApp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Red Team Beacon Strategy", group="Autonomous")
@@ -28,14 +29,36 @@ public class RedBeaconStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Main Code *** //
-        while (true) {
-            telemetry.addData("Touch sensor test...", sensors.isTouchingBeacon()); // prints true if being touched.
-            telemetry.update();
-            sleep(100);
+        drive.forward(52);
+        drive.turn(-93);
+        drive.pressBeacon();
+        if (sensors.getBeaconColor() == 'b') {
+            drive.tap();
+            sleep(5000);
+            drive.backward(3);
+            drive.tap();
         }
+        else {
+            drive.tap();
+        }
+        drive.backward(3 + 25);
+        drive.turn(90);
+        drive.forward(Constants.DISTANCE_BETWEEN_BEACONS);
+        drive.turn(-90);
+        drive.pressBeacon();
+        if (sensors.getBeaconColor() == 'b') {
+            drive.tap();
+            sleep(5000);
+            drive.backward(3);
+            drive.tap();
+        }
+        else {
+            drive.tap();
+        }
+        drive.backward(4);
         //sleep(3000);
         // *** Main Code Done *** //
-        //telemetry.addData("Robot", "Done...");
-        //telemetry.update();
+        telemetry.addData("Robot", "Done...");
+        telemetry.update();
     }
 }

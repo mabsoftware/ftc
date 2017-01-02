@@ -86,6 +86,8 @@ public class Drive extends OpMode {
         // *** Set motor speeds ***//
         robot.leftMotor.setPower(myLeft);
         robot.rightMotor.setPower(myRight);
+
+        shooterSpeed = Range.clip(shooterSpeed, 0, Constants.PHYSICAL_MAX); // Don't want backward movement.
         robot.leftShooter.setPower(shooterSpeed);
         robot.rightShooter.setPower(shooterSpeed);
         // Send data via telemetry.
