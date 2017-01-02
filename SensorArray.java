@@ -6,25 +6,34 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.*;
 
 public class SensorArray {
     private ColorSensor beaconcSensor;
     private ColorSensing beaconColorSensor;
-    private TouchSensor beaconTouchSensor;
+    private OpticalDistanceSensor opticalDistanceSensor;
+    private LinearOpMode l;
     public SensorArray(LinearOpMode l) {
         beaconcSensor = l.hardwareMap.colorSensor.get(Constants.beacon_color_sensor);
         beaconColorSensor = new ColorSensing(beaconcSensor);
-        beaconTouchSensor = l.hardwareMap.touchSensor.get(Constants.beacon_touch_sensor);
+        opticalDistanceSensor = l.hardwareMap.opticalDistanceSensor.get(Constants.beacon_optical_sensor);
 
+        this.l = l;
+        opticalDistanceSensor.enableLed(true);
         beaconColorSensor.setMode('p');
     }
     public char getBeaconColor() {
         return beaconColorSensor.getColor();
     }
 
-    public boolean isTouchingBeacon() {
-        return beaconTouchSensor.isPressed();
+    public double opticalValue() {
+        return opticalDistanceSensor.getLightDetected();
+    }
+
+    public boolean donePressing() {
+        if (opticalDistanceSensor.getLightDetected() > Constants.optical_threshold) {
+            return true;
+        }
+        return false;
     }
 }
