@@ -42,10 +42,10 @@ public class RedBeaconStrategy extends LinearOpMode {
             drive.tap();
         }
         drive.backward(3 + 25);
-        drive.turn(90);
+        drive.turn(92);
         drive.forward(Constants.DISTANCE_BETWEEN_BEACONS);
-        drive.turn(-90);
-        drive.pressBeacon();
+        drive.turn(-94);
+        drive.forward(10);
         if (sensors.getBeaconColor() == 'b') {
             drive.tap();
             sleep(5000);

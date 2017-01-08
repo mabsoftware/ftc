@@ -11,7 +11,9 @@ public class Constants
 
     static final double PHYSICAL_MAX = 1.0;
 
-    static final double DISTANCE_BETWEEN_BEACONS = 15;
+    static final double TICKS_PER_DEGREE = 1440 / 360;
+
+    static final double DISTANCE_BETWEEN_BEACONS = 33.7;
     static final double ROBOT_WIDTH = 16;
 
     // Strings for configuring sensors.

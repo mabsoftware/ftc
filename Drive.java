@@ -58,8 +58,8 @@ public class Drive extends OpMode {
         boolean rightBumper = gamepad1.right_bumper;
         boolean yButton = gamepad1.y;
         boolean aButton = gamepad1.a;
-        double shooterSpeed = gamepad2.left_stick_y;
-        double sweeperSpeed = gamepad2.right_stick_y;
+        boolean shootButton = gamepad2.a;
+        double speed = gamepad2.right_stick_y;
         // *** Handle values from users *** //
         if (leftBumper) inPreciseMode = true; // If left bumper is hit, set to precise mode.
         if (rightBumper) inPreciseMode = false; // If right bumper is hit, set to speed mode.
@@ -83,17 +83,22 @@ public class Drive extends OpMode {
             myRight = Range.clip(myRight, -MAX, MAX);
             telemetry.addData("Mode: ", "Speed");
         } // handle precise and speed modes.
+
+        if (shootButton) {
+            int target = robot.catapult.getCurrentPosition() - (int) (Constants.TICKS_PER_DEGREE * 2000);
+            robot.catapult.setPower(Constants.PHYSICAL_MAX);
+            while (robot.catapult.isBusy());
+        } // Shoot using encoders.
         // *** Set motor speeds ***//
         robot.leftMotor.setPower(myLeft);
         robot.rightMotor.setPower(myRight);
+        robot.catapult.setPower(speed);
 
-        shooterSpeed = Range.clip(shooterSpeed, 0, Constants.PHYSICAL_MAX); // Don't want backward movement.
-        robot.leftShooter.setPower(shooterSpeed);
-        robot.rightShooter.setPower(shooterSpeed);
         // Send data via telemetry.
         telemetry.addData("Data", "**** Joystick Data ****");
         telemetry.addData("Left",  "%.2f", myLeft);
         telemetry.addData("Right", "%.2f", myRight);
+        telemetry.addData("Speed", "%.2f", speed);
     }
 
     // Code to run ONCE after the driver hits STOP
