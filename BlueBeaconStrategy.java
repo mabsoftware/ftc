@@ -28,20 +28,33 @@ public class BlueBeaconStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-
         drive.forward(52);
-        sleep(250);
-        drive.turn(90); // turn right 90 degrees
-        sleep(250);
+        drive.turn(93);
         drive.pressBeacon();
-        drive.backward(8);
-        drive.turn(-90); // turn left 90 degrees
-        sleep(250);
+        if (sensors.getBeaconColor() == 'b') {
+            drive.tap();
+            sleep(5000);
+            drive.backward(3);
+            drive.tap();
+        }
+        else {
+            drive.tap();
+        }
+        drive.backward(3 + 25);
+        drive.turn(-90);
         drive.forward(Constants.DISTANCE_BETWEEN_BEACONS);
         drive.turn(90);
         drive.pressBeacon();
-        drive.backward(8);
-        drive.turn(-90);
+        if (sensors.getBeaconColor() == 'b') {
+            drive.tap();
+            sleep(5000);
+            drive.backward(3);
+            drive.tap();
+        }
+        else {
+            drive.tap();
+        }
+        drive.backward(4);
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
         telemetry.update();
