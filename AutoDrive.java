@@ -60,6 +60,10 @@ public class AutoDrive {
         encoderDrive(Constants.DRIVE_SPEED, inches, inches);
     }
 
+    public void fastBackward(double inches) {
+        encoderDrive(Constants.DRIVE_SPEED * 2, -inches, -inches);
+    }
+
     public void backward(double inches) {
         encoderDrive(Constants.DRIVE_SPEED, -inches, -inches);
     }
