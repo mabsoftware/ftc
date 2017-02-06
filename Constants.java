@@ -18,6 +18,8 @@ public class Constants
 
     // Strings for configuring sensors.
     static final String beacon_color_sensor = "sensor_color";
-    static final double optical_threshold = 10000;
-    static final String beacon_optical_sensor = "sensor_optical";
+    static final double optical_threshold = 0.01;
+    static final String beacon_optical_sensor = "ods";
+    static final double blue_threshold = 7;
+    static final double red_threshold = 6;
 }

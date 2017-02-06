@@ -42,6 +42,7 @@ public class RedBeaconStrategy extends LinearOpMode {
             drive.tap();
         }
         drive.backward(3 + 25);
+        /*
         drive.turn(92);
         drive.forward(Constants.DISTANCE_BETWEEN_BEACONS);
         drive.turn(-94);
@@ -57,6 +58,7 @@ public class RedBeaconStrategy extends LinearOpMode {
         }
         drive.backward(4);
         //sleep(3000);
+        */
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();
