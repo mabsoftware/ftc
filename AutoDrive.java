@@ -21,28 +21,6 @@ public class AutoDrive {
         resetEncoders();
     }
 
-    // Precondition: Robot is already lined up.
-    /*
-    public void pressBeacon() {
-        while (!s.donePressing()) {
-            robot.leftMotor.setPower(Constants.DRIVE_SPEED);
-            robot.rightMotor.setPower(Constants.DRIVE_SPEED);
-        }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-        if (s.getBeaconColor() == 'b') {
-            // Uncomment this to test the color sensor.
-            //telemetry.addData("::", "Got Blue.");
-            //sleep(10000);
-            forward(2);
-            l.sleep(250);
-        } else {
-            backward(2);
-            l.sleep(5000); // Wait for 5 seconds.
-            forward(2);
-        }
-    }
-    */
     public void pressBeacon() {
         this.forward(25);
     }
@@ -54,6 +32,17 @@ public class AutoDrive {
     public void resetEncoders() {
         robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void setToRun(double left, double right) {
+
+    }
+
+    public void brake() {
+        robot.leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
     }
 
     public void forward(double inches) {

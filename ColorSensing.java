@@ -16,6 +16,15 @@ public class ColorSensing {
         if (sensor.red() > sensor.blue()) return 'r';
         return 'b';
     }
+    public double r()
+    { return sensor.red(); }
+
+    public double g()
+    { return sensor.green(); }
+
+    public double b()
+    { return sensor.blue(); }
+
     public void setMode(char a) {
         if (a == 'a') {
             sensor.enableLed(true);

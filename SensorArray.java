@@ -11,27 +11,32 @@ import com.qualcomm.robotcore.hardware.*;
 public class SensorArray {
     private ColorSensor beaconcSensor;
     private ColorSensing beaconColorSensor;
-    private OpticalDistanceSensor opticalDistanceSensor;
+    private OpticalDistanceSensor odsSensor;
     private LinearOpMode l;
     public SensorArray(LinearOpMode l) {
         beaconcSensor = l.hardwareMap.colorSensor.get(Constants.beacon_color_sensor);
         beaconColorSensor = new ColorSensing(beaconcSensor);
-        opticalDistanceSensor = l.hardwareMap.opticalDistanceSensor.get(Constants.beacon_optical_sensor);
+        odsSensor = l.hardwareMap.opticalDistanceSensor.get(Constants.beacon_optical_sensor);
 
         this.l = l;
-        opticalDistanceSensor.enableLed(true);
+        odsSensor.enableLed(true);
         beaconColorSensor.setMode('p');
     }
     public char getBeaconColor() {
         return beaconColorSensor.getColor();
     }
 
-    public double opticalValue() {
-        return opticalDistanceSensor.getLightDetected();
-    }
+    public double r()
+    { return beaconColorSensor.r(); }
 
-    public boolean donePressing() {
-        if (opticalDistanceSensor.getLightDetected() > Constants.optical_threshold) {
+    public double g()
+    { return beaconColorSensor.g(); }
+
+    public double b()
+    { return beaconColorSensor.b(); }
+
+    public boolean overLine() {
+        if (odsSensor.getLightDetected() >= Constants.optical_threshold) {
             return true;
         }
         return false;
