@@ -1,9 +1,9 @@
-/* Beacon Strategy on Blue Side
- * Note: front is beacon pusher.
- * Negative power to the motors drives the robot forward, beacon pusher first.
- * So for autonomous, with ball shooting, make sure to remember this.
- */
-
+/*********************************************************************************************************
+ * Blue Team Beacon Strategy                                                                             *
+ * Summary: Drives until white line is detected. Drives two more inches, turns until white line is       *
+ * detected. Turns just past white line. Detects color. Presses appropriate number of times.             *
+ * Version: 2/05/17                                                                                      *
+ *********************************************************************************************************/
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
