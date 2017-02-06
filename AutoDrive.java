@@ -35,7 +35,10 @@ public class AutoDrive {
     }
 
     public void setToRun(double left, double right) {
-
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftMotor.setPower(left);
+        robot.rightMotor.setPower(right);
     }
 
     public void brake() {
@@ -46,14 +49,20 @@ public class AutoDrive {
     }
 
     public void forward(double inches) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         encoderDrive(Constants.DRIVE_SPEED, inches, inches);
     }
 
     public void fastBackward(double inches) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         encoderDrive(Constants.DRIVE_SPEED * 2, -inches, -inches);
     }
 
     public void backward(double inches) {
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         encoderDrive(Constants.DRIVE_SPEED, -inches, -inches);
     }
 

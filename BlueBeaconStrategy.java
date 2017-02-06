@@ -29,30 +29,24 @@ public class BlueBeaconStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftMotor.setPower(0.1);
-        robot.rightMotor.setPower(0.1);
+        drive.setToRun(0.1, 0.1);
+        while (!sensors.overLine());
+        // drive to line
+        drive.brake();
+        drive.forward(2);
+        // Line up
+        drive.setToRun(0.1, 0);
         while (!sensors.overLine());
         drive.brake();
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        drive.forward(2);
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftMotor.setPower(0.1);
-        while (!sensors.overLine());
-        robot.leftMotor.setPower(0);
-        robot.leftMotor.setPower(0.1);
+        drive.setToRun(0.1, 0);
         while (sensors.overLine());
-        robot.leftMotor.setPower(0);
-        robot.leftMotor.setPower(0.1);
-        robot.rightMotor.setPower(0.1);
-        while (!(sensors.r() >= Constants.red_threshold || sensors.b() >= Constants.blue_threshold));
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // lined up
+        drive.brake();
+        drive.setToRun(0.1, 0.1);
+        while (!(sensors.r() >= Constants.red_threshold || sensors.b() >= Constants.blue_threshold)); // drive forward while we don't have enough light.
         if (sensors.getBeaconColor() == 'r') {
             drive.backward(3);
+            sleep(5000);
             drive.forward(3);
         }
         drive.backward(3);
