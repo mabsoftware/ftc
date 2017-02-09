@@ -2,7 +2,7 @@
  * Blue Team Beacon Strategy                                                                             *
  * Summary: Drives until white line is detected. Drives two more inches, turns until white line is       *
  * detected. Turns just past white line. Detects color. Presses appropriate number of times.             *
- * Version: 2/07/17                                                                                      *
+ * Version: 2/09/17                                                                                      *
  *********************************************************************************************************/
 package org.firstinspires.ftc.teamcode;
 

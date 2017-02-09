@@ -1,9 +1,9 @@
-/* Team Fractals Autonomous Program if on Team Red, beacon strategy.
- * Based on program by Robert Atkinson (2016)
- * Note: front is beacon pusher.
- * Negative power to the motors moves the robot
- * forward.
- */
+/*********************************************************************************************************
+ * Red Team Beacon Strategy                                                                             *
+ * Summary: Drives until white line is detected. Drives two more inches, turns until white line is       *
+ * detected. Turns just past white line. Detects color. Presses appropriate number of times.             *
+ * Version: 2/09/17                                                                                      *
+ *********************************************************************************************************/
 
 package org.firstinspires.ftc.teamcode;
 
@@ -29,37 +29,36 @@ public class RedBeaconStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Main Code *** //
-        drive.forward(52);
-        drive.turn(-93);
-        drive.pressBeacon();
+        robot.init(hardwareMap, true);
+        sensors = new SensorArray(this);
+        drive = new AutoDrive(this, robot, sensors);
+        telemetry.addData("Message", "All systems online.");
+
+        waitForStart(); // Wait until ready.
+
+        // *** Boiler Plate Code Done *** //
+        drive.setToRun(0.3, 0.3);
+        while (!sensors.overLine());
+        // drive to line
+        drive.brake();
+        drive.forward(2);
+        // Line up
+        drive.setToRun(0, 0.1);
+        while (!sensors.overLine());
+        drive.brake();
+        drive.setToRun(0, 0.1);
+        while (sensors.overLine());
+        // lined up
+        drive.brake();
+        drive.setToRun(0.5, 0.5);
+        while (!(sensors.r() >= Constants.red_threshold || sensors.b() >= Constants.blue_threshold)); // drive forward while we don't have enough light.
         if (sensors.getBeaconColor() == 'b') {
-            drive.tap();
-            sleep(5000);
             drive.backward(3);
-            drive.tap();
-        }
-        else {
-            drive.tap();
-        }
-        drive.backward(3 + 25);
-        /*
-        drive.turn(92);
-        drive.forward(Constants.DISTANCE_BETWEEN_BEACONS);
-        drive.turn(-94);
-        drive.forward(10);
-        if (sensors.getBeaconColor() == 'b') {
-            drive.tap();
             sleep(5000);
-            drive.backward(3);
-            drive.tap();
+            drive.forward(3);
         }
-        else {
-            drive.tap();
-        }
-        drive.backward(4);
-        //sleep(3000);
-        */
-        // *** Main Code Done *** //
+        drive.backward(3);
+        // *** Stop Robot *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();
     }
