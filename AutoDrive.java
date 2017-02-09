@@ -21,17 +21,34 @@ public class AutoDrive {
         resetEncoders();
     }
 
-    public void pressBeacon() {
-        this.forward(25);
-    }
+    // You've only got one shot
+    public void shoot() {
+        // Determine new target position, and pass to motor controller
+        robot.catapult.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        int newLeftTarget = robot.leftMotor.getCurrentPosition() + (int) Constants.COUNTS_PER_INCH / 4;
+        robot.catapult.setTargetPosition(newLeftTarget);
 
-    public void tap() {
-        this.forward(3);
+        // Turn On RUN_TO_POSITION
+        robot.catapult.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // reset the timeout time and start motion.
+        robot.catapult.setPower(Constants.PHYSICAL_MAX / 3);
+
+        // keep looping while we are still active, and there is time left, and both motors are running.
+        while (l.opModeIsActive() && robot.catapult.isBusy());
+
+        // Stop all motion;
+        robot.catapult.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void resetEncoders() {
         robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.catapult.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setToRun(double left, double right) {

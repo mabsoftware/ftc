@@ -1,3 +1,9 @@
+/*********************************************************************************************************
+ * Blue Team Ball Strategy                                                                               *
+ * Summary: Drives straight the diagonal length of the field to hit the cap ball.                        *
+ * Version: 2/09/17                                                                                      *
+ *********************************************************************************************************/
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -22,6 +28,7 @@ public class BlueBallStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
+        sleep(20000); // maintain compatability with other teams
         drive.fastBackward(5.75 * 12);
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
