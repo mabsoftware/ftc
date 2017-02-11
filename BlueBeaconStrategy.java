@@ -42,14 +42,16 @@ public class BlueBeaconStrategy extends LinearOpMode {
         while (sensors.overLine());
         // lined up
         drive.brake();
-        drive.setToRun(0.1, 0.1);
-        while (!(sensors.r() >= Constants.red_threshold || sensors.b() >= Constants.blue_threshold)); // drive forward while we don't have enough light.
+        drive.setToRun(0.3, 0.3);
+        sleep(500);
+        drive.backward(4);
         if (sensors.getBeaconColor() == 'r') {
-            drive.backward(3);
             sleep(5000);
             drive.forward(3);
         }
-        drive.backward(3);
+        drive.backward(14);
+        //drive.shoot();
+        drive.brake();
 
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");

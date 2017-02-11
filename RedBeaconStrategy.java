@@ -50,14 +50,18 @@ public class RedBeaconStrategy extends LinearOpMode {
         while (sensors.overLine());
         // lined up
         drive.brake();
-        drive.setToRun(0.5, 0.5);
-        while (!(sensors.r() >= Constants.red_threshold || sensors.b() >= Constants.blue_threshold)); // drive forward while we don't have enough light.
+        drive.setToRun(0.2, 0.2);
+        sleep(500); // hit the beacon
         if (sensors.getBeaconColor() == 'b') {
             drive.backward(3);
             sleep(5000);
             drive.forward(3);
         }
         drive.backward(3);
+        // lined up to shoot... almost
+        drive.backward(14);
+        drive.shoot();
+        drive.brake();
         // *** Stop Robot *** //
         telemetry.addData("Robot", "Done...");
         telemetry.update();

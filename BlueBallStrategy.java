@@ -28,8 +28,12 @@ public class BlueBallStrategy extends LinearOpMode {
         waitForStart(); // Wait until ready.
 
         // *** Boiler Plate Code Done *** //
-        sleep(20000); // maintain compatability with other teams
-        drive.fastBackward(5.75 * 12);
+        sleep(10000); // maintain compatability
+        drive.fastBackward(5.0 * 12);
+        drive.brake();
+        drive.shoot();
+        drive.fastBackward(5);
+        drive.brake();
         // *** Main Code Done *** //
         telemetry.addData("Robot", "Stopped.");
         telemetry.update();
