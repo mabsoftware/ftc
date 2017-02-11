@@ -25,7 +25,7 @@ public class AutoDrive {
     public void shoot() {
         // Determine new target position, and pass to motor controller
         robot.catapult.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        int newLeftTarget = robot.leftMotor.getCurrentPosition() + (int) Constants.COUNTS_PER_INCH / 4;
+        int newLeftTarget = robot.leftMotor.getCurrentPosition() + (int) Constants.COUNTS_PER_INCH / 8;
         robot.catapult.setTargetPosition(newLeftTarget);
 
         // Turn On RUN_TO_POSITION
