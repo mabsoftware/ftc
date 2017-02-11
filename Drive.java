@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 public class Drive extends OpMode {
 
     /* Declare OpMode members. */
+    // Initialize hardware
     Hardware robot;
 
     boolean forwardBeacon; // true if beacon side, false if not.
