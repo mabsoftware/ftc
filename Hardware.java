@@ -1,10 +1,11 @@
-/********************************************************
- * Hardware Map                                         *
- * Basic hardware map that initializes two drive motors *
- * 4/12/17                                              *
- ********************************************************/
-
 package org.firstinspires.ftc.teamcode;
+/**
+ * Fundamental class: Hardware
+ * Serves as a map for all the hardware.
+ * Currently only initializes two drive motors.
+ * @author Max Bowman
+ * @version 4/12/17
+ */
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
