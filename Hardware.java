@@ -1,12 +1,12 @@
-/* Hardware Map
- * Allows us to control hardware.
- * Subject to change.
- */
+/********************************************************
+ * Hardware Map                                         *
+ * Basic hardware map that initializes two drive motors *
+ * 4/12/17                                              *
+ ********************************************************/
 
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,10 +15,8 @@ public class Hardware
     /* Public OpMode members. */
     public DcMotor  leftMotor    = null;
     public DcMotor  rightMotor   = null;
-    public DcMotor  catapult     = null;
-    //public DcMotor  sweeper      = null;
 
-    public boolean withEncoders = false;
+    public boolean usingEncoders = false;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -30,38 +28,30 @@ public class Hardware
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap, boolean isUsing) {
+    public void init(HardwareMap ahwMap, boolean usingEncoders) {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        this.withEncoders = isUsing;
+        this.usingEncoders = usingEncoders;
 
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left_motor");
         rightMotor  = hwMap.dcMotor.get("right_motor");
-        catapult    = hwMap.dcMotor.get("catapult");
-        //sweeper = hwMap.dcMotor.get("sweeper");
 
         // Textrix Motors
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if we transfer to AndyMark motors
         rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if we transfer to AndyMark motors
-        // AndyMark Motors
-        catapult.setDirection(DcMotor.Direction.REVERSE);
-        catapult.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-        catapult.setPower(0);
-        //sweeper.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
 
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        catapult.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        if (withEncoders) {
+        if (usingEncoders) {
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
