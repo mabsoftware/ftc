@@ -60,10 +60,10 @@ public class AutoDrive {
 
     /**
      * Sets speed of both motors to parameter
-     * @param a desired speed of both motors
+     * @param speed desired speed of both motors
      */
-    public void setMotorSpeeds(double a) {
-        setMotorSpeeds(a, a);
+    public void setMotorSpeeds(double speed) {
+        setMotorSpeeds(speed, speed);
     }
 
     /**
@@ -89,23 +89,26 @@ public class AutoDrive {
         robot.rightMotor.setPower(0);
     }
 
-    // Preconditions: theta is in the interval [-359, 359]
-    // To do: find out how to optimize this... too many lines of code
-    // for a simple job.
-    // NOTE: REWRITE THIS ONCE USING GYRO
-    /*
+    /**
+     * Turns the robot theta degrees
+     * A positive value indicates a right turn,
+     * a negative value indicates a left turn
+     * @param theta how much to turn the robot
+     */
     public void turn(double theta) {
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // turn left if negative, right otherwise.
-        if (theta < 0) {
-            double distanceToMove = Constants.ROBOT_WIDTH * (-theta / 360) * Math.PI;
-            encoderDrive(0, distanceToMove * 2);
-        } else {
-            double distanceToMove = Constants.ROBOT_WIDTH * (theta / 360) * Math.PI;
-            encoderDrive(distanceToMove * 2, 0);
+        int initialHeading = s.getHeading();
+        if (theta == 0) return;
+        else if (theta > 0) {
+            setMotorSpeeds(speed, 0);
+            while (s.getHeading() - initialHeading < theta);
+            brake();
         }
-    }*/
+        else {
+            setMotorSpeeds(0, speed);
+            while (initialHeading - s.getHeading() < theta);
+            brake();
+        }
+    }
 
     /**
      * Drives the motors forward / backward using motor encoders
