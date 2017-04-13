@@ -1,3 +1,4 @@
+package org.firstinspires.ftc.teamcode;
 /**
  * Main driving class
  * The manual program for the driving (non-autonomous)
@@ -5,8 +6,6 @@
  * @author Max Bowman
  * @version 4/12/17
  */
-
-package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -98,7 +97,7 @@ public class Drive extends OpMode {
         robot.rightMotor.setPower(myRight);
 
         // Send data via telemetry.
-        telemetry.addData("Data", "**** Joystick Data ****");
+        telemetry.addData("Data", "*** Joystick Data ***");
         telemetry.addData("Left",  "%.2f", myLeft);
         telemetry.addData("Right", "%.2f", myRight);
     }
