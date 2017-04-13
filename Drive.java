@@ -69,8 +69,6 @@ public class Drive extends OpMode {
         boolean rightBumper = gamepad1.right_bumper;
         boolean yButton = gamepad1.y;
         boolean aButton = gamepad1.a;
-        boolean shootButton = gamepad2.a;
-        double speed = gamepad2.right_stick_y;
         // *** Handle values from users *** //
         if (leftBumper) inPreciseMode = true; // If left bumper is hit, set to precise mode.
         if (rightBumper) inPreciseMode = false; // If right bumper is hit, set to speed mode.
@@ -103,7 +101,6 @@ public class Drive extends OpMode {
         telemetry.addData("Data", "**** Joystick Data ****");
         telemetry.addData("Left",  "%.2f", myLeft);
         telemetry.addData("Right", "%.2f", myRight);
-        telemetry.addData("Speed", "%.2f", speed);
     }
 
     /**
