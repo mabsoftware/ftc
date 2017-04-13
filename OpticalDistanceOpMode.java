@@ -3,9 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-@Autonomous(name = "Optical Test OpMode", group = "Autonomous")
+@Autonomous(name = "Gyro Test OpMode", group = "Autonomous")
 public class OpticalDistanceOpMode extends LinearOpMode {
     Hardware robot = new Hardware(); // Initialize hardware.
     private ElapsedTime runtime = new ElapsedTime(); // Figure out how long the robot has been running.
@@ -24,11 +23,11 @@ public class OpticalDistanceOpMode extends LinearOpMode {
 
         // *** Boiler Plate Code Done *** //
         // *** Main Code Done *** //
-        while (true) {
-            telemetry.addData("Red", sensors.r());
-            telemetry.addData("Green", sensors.g());
-            telemetry.addData("Blue", sensors.b());
-            telemetry.update();
-        }
+        drive.move(10);
+        drive.turn(90);
+        drive.turn(-90);
+        drive.turn(0);
+        drive.turn(359);
+        drive.turn(1);
     }
 }

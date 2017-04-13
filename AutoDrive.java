@@ -14,7 +14,7 @@ public class AutoDrive {
     LinearOpMode l;
     Hardware robot;
     SensorArray s;
-    int speed;
+    double speed;
 
     /**
      * AutoDrive Constructor
@@ -34,7 +34,7 @@ public class AutoDrive {
      * Sets the speed of the motors in drive
      * @param speed desired running speed
      */
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -97,17 +97,17 @@ public class AutoDrive {
      */
     public void turn(double theta) {
         int initialHeading = s.getHeading();
+        theta %= 360;
         if (theta == 0) return;
         else if (theta > 0) {
             setMotorSpeeds(speed, 0);
             while (s.getHeading() - initialHeading < theta);
-            brake();
         }
         else {
             setMotorSpeeds(0, speed);
             while (initialHeading - s.getHeading() < theta);
-            brake();
         }
+        brake();
     }
 
     /**
@@ -139,7 +139,7 @@ public class AutoDrive {
             robot.rightMotor.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            while (l.opModeIsActive() && ((robot.leftMotor.isBusy() || robot.rightMotor.isBusy())));
+            while (l.opModeIsActive() && (robot.leftMotor.isBusy() || robot.rightMotor.isBusy()));
 
             // Stop all motion;
             brake();
@@ -147,6 +147,8 @@ public class AutoDrive {
             // Turn off RUN_TO_POSITION
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            brake();
         }
     }
 }
