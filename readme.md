@@ -119,3 +119,11 @@ Note: Some names start with "Team" and others start with "team".  This is intent
 5)  Add:    include ':Team0417' to the "/settings.gradle" file.
     
 6)  Open up Android Studios and clean out any old files by using the menu to "Build/Clean Project""
+
+
+##Team Fractals Conventions
+Put all reusable driving-related code in the class AutoDrive.
+
+Put all reusable sensor-related code in the class SensorArray.
+
+Put all constants, including driving-related constants and sensor names in the Constants class.

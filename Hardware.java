@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 /**
- * Fundamental class: Hardware
- * Serves as a map for all the hardware.
- * Currently only initializes two drive motors.
+ * Wrapper class: Hardware
+ * Provides an easy-to-use wrapper that makes
+ * referencing hardware objects easy.
+ * Based heavily on Hardware.java written
+ * by Robert Atkinson, 2016
  * @author Max Bowman
  * @version 4/12/17
  */
@@ -13,22 +15,31 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Hardware
 {
-    /* Public OpMode members. */
+    /**
+     *  Public OpMode members.
+     */
     public DcMotor  leftMotor    = null;
     public DcMotor  rightMotor   = null;
 
     public boolean usingEncoders = false;
 
-    /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    /**
+     * Local opmode members
+     */
+    private HardwareMap hwMap    =  null;
+    private ElapsedTime period   =  new ElapsedTime();
 
-    /* Constructor */
+    /**
+     * Constructor for Hardware
+     * (Empty)
+     */
     public Hardware() {
 
     }
 
-    /* Initialize standard Hardware interfaces */
+    /**
+     * Initialize standard Hardware interfaces
+     */
     public void init(HardwareMap ahwMap, boolean usingEncoders) {
         // Save reference to Hardware map
         hwMap = ahwMap;
@@ -36,8 +47,8 @@ public class Hardware
         this.usingEncoders = usingEncoders;
 
         // Define and Initialize Motors
-        leftMotor   = hwMap.dcMotor.get("left_motor");
-        rightMotor  = hwMap.dcMotor.get("right_motor");
+        leftMotor  = hwMap.dcMotor.get("left_motor");
+        rightMotor = hwMap.dcMotor.get("right_motor");
 
         // Textrix Motors
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if we transfer to AndyMark motors

@@ -32,6 +32,8 @@ public class AutoDrive {
 
     /**
      * Sets the speed of the motors in drive
+     * Speed is specified in the range [0, 1]
+     * where 1 is the fastest speed and 0 stopped
      * @param speed desired running speed
      */
     public void setSpeed(double speed) {
