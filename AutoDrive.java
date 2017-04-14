@@ -36,9 +36,7 @@ public class AutoDrive {
      * where 1 is the fastest speed and 0 stopped
      * @param speed desired running speed
      */
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
+    public void setSpeed(double speed) { this.speed = speed; }
 
     /**
      * Resets Encoders
@@ -64,9 +62,7 @@ public class AutoDrive {
      * Sets speed of both motors to parameter
      * @param speed desired speed of both motors
      */
-    public void setMotorSpeeds(double speed) {
-        setMotorSpeeds(speed, speed);
-    }
+    public void setMotorSpeeds(double speed) { setMotorSpeeds(speed, speed); }
 
     /**
      * Moves robot using encoders forward and backward. Supply positive
@@ -97,18 +93,16 @@ public class AutoDrive {
      * a negative value indicates a left turn
      * @param theta how much to turn the robot
      */
-    public void turn(double theta) {
-        int initialHeading = s.getHeading();
-        theta %= 360;
+    public void turn(int theta) {
+        int desiredHeading = (s.getHeading() + theta) % 360;
         if (theta == 0) return;
         else if (theta > 0) {
             setMotorSpeeds(speed, 0);
-            while (s.getHeading() - initialHeading < theta);
         }
         else {
             setMotorSpeeds(0, speed);
-            while (initialHeading - s.getHeading() < theta);
         }
+        while (l.opModeIsActive() && s.getHeading() != desiredHeading);
         brake();
     }
 
@@ -123,7 +117,7 @@ public class AutoDrive {
         int newLeftTarget;
         int newRightTarget;
 
-        // Ensure that the opmode is still active
+        // Ensure that the OpMode is still active
         if (l.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller

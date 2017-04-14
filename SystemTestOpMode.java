@@ -24,7 +24,7 @@ public class SystemTestOpMode extends LinearOpMode {
         telemetry.update();
         robot.init(hardwareMap, true);
         sensors = new SensorArray(this);
-        drive = new AutoDrive(this, robot, sensors);
+        drive   = new AutoDrive(this, robot, sensors);
         drive.resetEncoders();
         telemetry.addData("Status", "All systems online.");
         telemetry.update();
