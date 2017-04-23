@@ -19,6 +19,7 @@ public class Constants
     public static final String     beacon_color_sensor     = "color_sensor";
     public static final String     beacon_optical_sensor   = "optical_sensor";
     public static final String     gyro_sensor             = "gyro_sensor";
+    public static final String     right_motor             = "right_motor";
+    public static final String     left_motor              = "left_motor";
     public static final double     optical_threshold       = 0.01;
-
 }

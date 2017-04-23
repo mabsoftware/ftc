@@ -47,8 +47,8 @@ public class Hardware
         this.usingEncoders = usingEncoders;
 
         // Define and Initialize Motors
-        leftMotor  = hwMap.dcMotor.get("left_motor");
-        rightMotor = hwMap.dcMotor.get("right_motor");
+        leftMotor  = hwMap.dcMotor.get(Constants.left_motor);
+        rightMotor = hwMap.dcMotor.get(Constants.right_motor);
 
         // Textrix Motors
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if we transfer to AndyMark motors

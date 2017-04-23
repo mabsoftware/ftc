@@ -31,9 +31,9 @@ public class AutoDrive {
     }
 
     /**
-     * Sets the speed of the motors in drive
+     * Sets the speed of the motors in encoder-based drive.
      * Speed is specified in the range [0, 1]
-     * where 1 is the fastest speed and 0 stopped
+     * where 1 is the fastest speed and 0 stopped.
      * @param speed desired running speed
      */
     public void setSpeed(double speed) { this.speed = speed; }
@@ -88,9 +88,9 @@ public class AutoDrive {
     }
 
     /**
-     * Turns the robot theta degrees
+     * Turns the robot theta degrees.
      * A positive value indicates a right turn,
-     * a negative value indicates a left turn
+     * a negative value indicates a left turn.
      * @param theta how much to turn the robot
      */
     public void turn(int theta) {
