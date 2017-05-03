@@ -88,7 +88,8 @@ public class AutoDrive {
     }
 
     /**
-     * Turns the robot theta degrees.
+     * Turns the robot theta degrees around the
+     * left or right wheel as a pivot
      * A positive value indicates a right turn,
      * a negative value indicates a left turn.
      * @param theta how much to turn the robot
@@ -137,14 +138,12 @@ public class AutoDrive {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (l.opModeIsActive() && (robot.leftMotor.isBusy() || robot.rightMotor.isBusy()));
 
-            // Stop all motion;
+            // Stop all motion
             brake();
 
             // Turn off RUN_TO_POSITION
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            brake();
         }
     }
 }
