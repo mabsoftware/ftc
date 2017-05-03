@@ -33,7 +33,8 @@ public class SensorArray {
         odsSensor.enableLed(true);
         colorSensor.enableLed(true);
 
-        l.telemetry.addData("Warning", "Calibrating gyro - do not move!");
+        l.telemetry.addData("Status", "Calibrating sensors...");
+        l.telemetry.addData("Warning", "Do not move!");
         l.telemetry.update();
 
         gyroSensor.calibrate();
@@ -86,9 +87,7 @@ public class SensorArray {
      * Returns the heading of the robot (z-axis) from the gyro
      * @return heading
      */
-    public int getHeading() {
-        return gyroSensor.getHeading();
-    }
+    public int getHeading() { return gyroSensor.getHeading(); }
 
     /**
      * Returns the acceleration in each axis.

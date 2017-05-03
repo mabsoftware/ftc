@@ -37,7 +37,7 @@ public class Drive extends OpMode {
         inPreciseMode = true;
 
         // Send telemetry message to signify robot waiting.
-        telemetry.addData("Robot", "Ready.");
+        telemetry.addData("Status", "Ready.");
     }
 
     /**
@@ -45,7 +45,7 @@ public class Drive extends OpMode {
      */
     @Override
     public void init_loop() {
-        telemetry.addData("Robot", "Please press play.");
+        telemetry.addData("Status", "Please press play.");
     }
 
     /**
@@ -53,7 +53,7 @@ public class Drive extends OpMode {
      */
     @Override
     public void start() {
-        telemetry.addData("Robot", "Starting...");
+        telemetry.addData("Status", "Starting...");
     }
 
     /**
@@ -107,7 +107,7 @@ public class Drive extends OpMode {
      */
     @Override
     public void stop() {
-        telemetry.addData("Robot", "Stopped.");
+        telemetry.addData("Status", "Stopped.");
     }
 
 }

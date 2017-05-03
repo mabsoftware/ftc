@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Bundles all constants for encoder driving and sensor names.
  * period. Makes it easier to create multiple autonomous strategies.
  * @author Max Bowman
- * @version 4/12/17
+ * @version 4/14/17
  */
 
 public class Constants
@@ -16,9 +16,10 @@ public class Constants
     public static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
 
     // Strings for configuring sensors.
-    public static final String beacon_color_sensor   = "color_sensor";
-    public static final double optical_threshold     = 0.01;
-    public static final String beacon_optical_sensor = "optical_sensor";
-    public static final String gyro_sensor           = "gyro_sensor";
-
+    public static final String     beacon_color_sensor     = "color_sensor";
+    public static final String     beacon_optical_sensor   = "optical_sensor";
+    public static final String     gyro_sensor             = "gyro_sensor";
+    public static final String     right_motor             = "right_motor";
+    public static final String     left_motor              = "left_motor";
+    public static final double     optical_threshold       = 0.01;
 }
