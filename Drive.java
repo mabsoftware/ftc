@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * The manual program for the driving (non-autonomous)
  * period.
  * @author Max Bowman
- * @version 4/12/17
+ * @version 5/11/17
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -18,7 +18,7 @@ public class Drive extends OpMode {
     // Initialize hardware
     Hardware robot;
 
-    boolean forwardBeacon; // true if beacon side, false if not.
+    boolean forwardArrow; // there is an arrow on the robot that indicates initial forward.
     boolean inPreciseMode; // true if precise mode, false if not.
 
     private static final double PRECISE = 0.25;
@@ -33,7 +33,7 @@ public class Drive extends OpMode {
         robot = new Hardware(); // define the robot's hardware.
         robot.init(hardwareMap, false); // Initialize hardware, no encoders.
 
-        forwardBeacon = true; // start w/ beacon pointing forward.
+        forwardArrow = true; // start w/ beacon pointing forward.
         inPreciseMode = true;
 
         // Send telemetry message to signify robot waiting.
@@ -66,35 +66,21 @@ public class Drive extends OpMode {
         double myRight = -gamepad1.right_stick_y;
         boolean leftBumper = gamepad1.left_bumper;
         boolean rightBumper = gamepad1.right_bumper;
-        boolean yButton = gamepad1.y;
-        boolean aButton = gamepad1.a;
-        // *** Handle values from users *** //
-        if (leftBumper) inPreciseMode = true; // If left bumper is hit, set to precise mode.
-        if (rightBumper) inPreciseMode = false; // If right bumper is hit, set to speed mode.
-        if (yButton) forwardBeacon = true;
-        if (aButton) forwardBeacon = false;
-        // *** Compute motor speeds *** //
-        if (!forwardBeacon) {
-            myLeft = -myLeft;
-            myRight = -myRight;
-            double temp = myLeft;
-            myLeft = myRight;
-            myRight = temp;
-        } // handle direction flipping, flip left and right motors.
-        if (inPreciseMode) {
-            myLeft = Range.clip(myLeft, -PRECISE, PRECISE);
-            myRight = Range.clip(myRight, -PRECISE, PRECISE);
-            telemetry.addData("Mode: ", "Precise");
-        }
-        else {
-            myLeft = Range.clip(myLeft, -MAX, MAX);
-            myRight = Range.clip(myRight, -MAX, MAX);
-            telemetry.addData("Mode: ", "Speed");
-        } // handle precise and speed modes.
 
-        // *** Set motor speeds ***//
-        robot.leftMotor.setPower(myLeft);
-        robot.rightMotor.setPower(myRight);
+        // *** Handle values from users *** //
+        if (leftBumper) inPreciseMode = !inPreciseMode;
+        if (rightBumper) forwardArrow = !forwardArrow;
+        // *** Compute motor speeds *** //
+        double range = inPreciseMode ? PRECISE : MAX;
+        myLeft = Range.clip(myLeft, -range, range);
+        myRight = Range.clip(myRight, -range, range);
+        if (forwardArrow) {
+            robot.leftMotor.setPower(myLeft);
+            robot.rightMotor.setPower(myRight);
+        } else {
+            robot.rightMotor.setPower(-myLeft);
+            robot.leftMotor.setPower(-myRight);
+        }
 
         // Send data via telemetry.
         telemetry.addData("Data", "*** Joystick Data ***");
