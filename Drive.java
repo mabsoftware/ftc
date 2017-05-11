@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode;
 /**
  * Main driving class
  * The manual program for the driving (non-autonomous)
- * period.
+ * period. Includes the ability to flip front/back of
+ * robot and switch between turbo and precise mode.
  * @author Max Bowman
  * @version 5/11/17
  */
