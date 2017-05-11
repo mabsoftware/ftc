@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 /**
  * Helper class: AutoDrive
- * Bundles all encoder-based driving functionality required for autonomous
+ * Bundles all encoder and sensor-based driving functionality required for autonomous
  * period. Makes it easier to create multiple autonomous strategies.
  * @author Max Bowman
  * @version 4/12/17

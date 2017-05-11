@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
  * Helper class: SensorArray
  * Bundles all sensor functionality into one convenient helper class
  * period. Makes it easier to create multiple autonomous strategies.
- * Current sensors supported: color, optical distance, and gyro.
+ * Current sensors supported: color (x1), optical distance(x1), and gyro(x1)
  * @author Max Bowman
  * @version 4/12/17
  */
