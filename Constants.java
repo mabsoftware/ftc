@@ -15,6 +15,8 @@ public class Constants
     public static final double     WHEEL_DIAMETER_INCHES   = 5.3125 ;     // For figuring circumference
     public static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
 
+    public static final double     PRECISE_SPEED           = 0.25;
+    public static final double     TURBO_SPEED             = 0.5;
     // Strings for configuring sensors.
     public static final String     beacon_color_sensor     = "color_sensor";
     public static final String     beacon_optical_sensor   = "optical_sensor";

@@ -22,9 +22,6 @@ public class Drive extends OpMode {
     boolean forwardArrow; // there is an arrow on the robot that indicates initial forward.
     boolean inPreciseMode; // true if precise mode, false if not.
 
-    private static final double PRECISE = 0.25;
-    private static final double MAX = 1.50 / 3; // Maximum speed is 50% of total capacity.
-
     /**
      * Code to run ONCE when the driver hits INIT
      */
@@ -72,7 +69,7 @@ public class Drive extends OpMode {
         if (leftBumper) inPreciseMode = !inPreciseMode;
         if (rightBumper) forwardArrow = !forwardArrow;
         // *** Compute motor speeds *** //
-        double range = inPreciseMode ? PRECISE : MAX;
+        double range = inPreciseMode ? Constants.PRECISE_SPEED : Constants.TURBO_SPEED;
         myLeft = Range.clip(myLeft, -range, range);
         myRight = Range.clip(myRight, -range, range);
         if (forwardArrow) {
