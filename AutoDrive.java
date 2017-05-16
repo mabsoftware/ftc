@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Bundles all encoder and sensor-based driving functionality required for autonomous
  * period. Makes it easier to create multiple autonomous strategies.
  * @author Max Bowman
- * @version 4/12/17
+ * @version 5/16/17
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
